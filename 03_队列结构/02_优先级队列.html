@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优先级队列</title>
+</head>
+<body>
+    <script>
+        // 创建一个优先级队列
+        function PriorityQueue() {
+                this.items = [];
+
+                // 封装一个优先级元素函数
+                function QriorityElement(element, priority) {
+                    this.element = element
+                    this.priority = priority
+                }
+
+                // 1.插入元素
+                PriorityQueue.prototype.enqueue = (element, priority) => {
+                    var priorityElement = new QriorityElement(element, priority);
+                    // 元素放入队列中
+                    this.items.push(priorityElement);
+                    // 队列元素根据优先级排序
+                    this.items.sort((a, b) => a.priority - b.priority)
+                }
+
+                // 移除元素
+                PriorityQueue.prototype.dequeue = function() {
+                    return this.items.shift();
+                }
+                // 返回队列第一个元素
+                PriorityQueue.prototype.front = function() {
+                    return this.items[0]
+                }
+                // 是否为空
+                PriorityQueue.prototype.isEmpty = function() {
+                    return this.items.length == 0
+                }
+                // 队列元素个数
+                PriorityQueue.prototype.size = function() {
+                    return this.items.length
+                }
+                // 转成字符串
+                PriorityQueue.prototype.toString = function() {
+                    return this.items.join(' ')
+                }   
+            }
+
+
+            let queue = new PriorityQueue();
+            queue.enqueue('lili', 100)
+            queue.enqueue('tom', 35)
+            queue.enqueue('tim', 20)
+            queue.enqueue('lucy', 1000)
+
+            console.log(queue);
+    </script>
+    
+</body>
+</html>
