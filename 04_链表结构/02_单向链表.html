@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>链表方法</title>
+</head>
+<body>
+    <script>
+        // 封装链表类
+        function LinkedList() {
+            // 内部的类：节点类
+            function Node(data) {
+                this.data = data
+                this.next = null
+            }
+
+            // 属性
+            this.head = null
+            this.length = 0
+
+            // 1.追加方法
+            LinkedList.prototype.append = function(data) {
+                // 1.创建新的节点
+                let node = new Node(data)
+                
+                // 2.判断是否是第一个节点
+                if(this.length == 0) { // 2.1 是第一个节点
+                    this.head = node
+                } else {                // 2.2 不是第一个节点
+                    // 找到最后一个节点
+                    let current = this.head;
+                    while(!!current.next) {
+                        current = current.next
+                    }
+
+                    // 最后节点的next指向新的节点
+                    current.next = node
+                }
+
+                // 3. length + 1
+                this.length += 1
+            }
+
+            // 2.实现toString
+            LinkedList.prototype.toString = function() {
+                let current = this.head
+                let listString = ''
+
+                while(current) {
+                    listString += current.data + " "
+                    current = current.next
+                }
+
+                return listString
+            }
+
+            // 3.insert方法
+            LinkedList.prototype.insert = function(position, data) {
+                // 3.0 越界判断
+                if(position < 0 || position > this.length) return false;
+                // 3.1 先把新数据封装
+                let newNode = new Node(data)
+
+                if(position == 0) { // 3.2 如果插入第一个位置
+                    newNode.next = this.head
+                    this.head = newNode
+                } else {
+                    let current = this.head
+                    let previous = null
+
+                    let index = 0;
+                    while(index++ < position) {
+                        previous = current
+                        current = current.next
+                    }
+
+                    previous.next = newNode
+                    newNode.next = current
+                }
+
+                // 4. length + 1
+                this.length += 1
+
+                return true
+            }
+
+            // 4.get方法
+            LinkedList.prototype.get = function(position) {
+                // 界限判断
+                if(position < 0 || position >= this.length) return null;
+
+                let current = this.head
+                let index = 0
+                while(index++ < position) {
+                    current = current.next
+                }
+
+                return current.data
+            }
+
+            // 5.indexOf方法
+            LinkedList.prototype.indexOf = function(data) {
+                let current = this.head
+                let index = 0
+
+                while(current) {
+                    if(current.data == data) return index
+            
+                    current = current.next
+                    index++
+                }
+
+                return -1
+            }
+            
+            // 6.update方法
+            LinkedList.prototype.update = function(position, data) {
+                // 边界判断
+                if(position < 0 || position >= this.length) return false
+
+                // 更新数据
+                let current = this.head
+                let index = 0
+                while(index++ < position) {
+                    current = current.next
+                }
+                current.data = data
+
+                return true
+            }
+
+            // 7.removeAt 移除特定位置的元素
+            LinkedList.prototype.removeAt = function(position) {
+                // 边界判断
+                if(position < 0 || position >= this.length) return false;
+
+                let current = this.head
+                if(position == 0) {
+                    this.head = this.head.next
+                } else {
+                    let previous = null 
+                    let index = 0
+
+                    while(index++ < position) {
+                        previous = current;
+                        current = current.next
+                    }
+
+                    previous.next = current.next;
+                }
+             
+                this.length -= 1
+
+                return current.data
+            }
+
+            // 8. remove方法
+            LinkedList.prototype.remove = function(data) {
+                let current = this.head
+                let previous = null
+                
+                while(current) {
+                    if(current.data == data) {
+                        previous.next = current.next
+                        this.length -= 1
+                        return 0;
+                    }
+                    previous = current
+                    current = current.next
+                }
+
+                return -1
+            }
+        }
+
+        let linkedList = new LinkedList()
+        // 测试append方法
+        linkedList.append('abc')
+        linkedList.append('bac')
+        linkedList.append('cba')
+        linkedList.append('nba')
+
+        // alert(linkedList.toString())
+
+        // 测试insert
+        linkedList.insert(0, 'aaa')
+        linkedList.insert(2, 'haha')
+        linkedList.insert(6, 'ccc')
+        // alert(linkedList.toString())
+
+        // 测试get方法
+        alert(linkedList.get(3))
+
+        //测试indexOf
+        // alert(linkedList.indexOf('aaa'))
+        alert(linkedList.indexOf('ccc'))
+
+        // 测试update
+        linkedList.update(4, 'liubin')
+        alert(linkedList)
+
+        // 测试 removeAt
+        alert(linkedList.removeAt(0))
+        alert(linkedList)
+
+        // 测试remove
+        // linkedList.remove('liubin')
+        // alert(linkedList)
+    </script>
+</body>
+</html>
