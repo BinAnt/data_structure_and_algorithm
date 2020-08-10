@@ -70,6 +70,48 @@
 
                 return linkString
             }
+
+            // 3 insert方法
+            DoublyLinkedList.prototype.insert = function(position, data) {
+                // 3.1 界限判定
+                if(position < 0 || position > this.length) return false
+
+                // 3.2 创建新节点
+                let newNode = new Node(data)
+
+                // 3.3.1 如果length == 0
+                if(this.length == 0) {
+                    this.head = newNode
+                    this.tail = newNode
+                } else {
+                    if(position == 0) {
+                        this.head.prev = newNode
+                        newNode.next = this.head
+                        this.head = newNode
+                    } else if(position == this.length) {
+                        newNode.prev = this.tail
+                        this.tail.next = newNode
+                        this.tail = newNode
+                    } else {
+                        let current = this.head
+                        let index = 0
+
+                        while(index++ < position) {
+                            current = current.next
+                        }
+
+                        current.prev.next = newNode
+                        newNode.prev = current.prev
+                        current.prev = newNode
+                        newNode.next = current
+                        
+                    }
+                }
+
+                this.length += 1
+
+                return true
+            }
         }
 
         let linkedList = new DoublyLinkedList()
@@ -81,6 +123,13 @@
         alert(linkedList.toString())
         alert(linkedList.backwordString())
         alert(linkedList.forwardString())
+
+        // 测试insert
+        linkedList.insert(0, 'aaaa')
+        linkedList.insert(4, 'bbbb')
+        linkedList.insert(2, 'cccc')
+
+        alert(linkedList.toString())
     </script>
 </body>
 </html>
