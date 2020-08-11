@@ -109,8 +109,122 @@
                 }
 
                 this.length += 1
-
                 return true
+            }
+
+            // 4.get方法
+            DoublyLinkedList.prototype.get = function(position) {
+                //4.1 越界判断
+                if(position < 0 || position >= this.length) return null
+
+                if(this.length/2 > position) { // 4.2 position数字比较小
+                    var current = this.head
+                    var index = 0
+                    while(index++ < position) {
+                        current = current.next
+                    }
+                } else {// 4.3 position比较靠后
+                    var current = this.tail
+                    var index = this.length - 1
+                    while(index-- > position) {
+                        current = current.prev
+                    }
+                }
+
+                return current.data
+            }
+
+            // 5.indexOf
+            DoublyLinkedList.prototype.indexOf = function(data) {
+                let index = 0
+                let current = this.head
+
+                while(current) {
+                    if(current.data == data) {
+                        return index
+                    }
+                    current = current.next
+                    index += 1
+                }
+
+                return -1
+            }
+
+            // 6.update(position, element)
+            DoublyLinkedList.prototype.update = function(position, data) {
+                // 6.1 边界判断
+                if(position < 0 || position >= this.length) return false
+
+                // 6.2 找到需要修改的节点
+                if(this.length/2 > position) { // 4.2 position数字比较小
+                    var current = this.head
+                    var index = 0
+                    while(index++ < position) {
+                        current = current.next
+                    }
+                } else {// 4.3 position比较靠后
+                    var current = this.tail
+                    var index = this.length - 1
+                    while(index-- > position) {
+                        current = current.prev
+                    }
+                }
+
+                current.data = data;
+                return true
+            }
+
+            // 7.removeAt
+            DoublyLinkedList.prototype.removeAt = function(position) {
+                // 7.1 判断边界
+                if(position < 0 || position >= this.length) return null
+
+                let current = this.head
+                if(position === 0) {
+                    if(this.length === 1) {
+                        this.head = null
+                        this.tail = null
+                    } else {
+                        this.head.next.prev = null
+                        this.head = this.head.next
+                    }
+                } else if(position === this.length - 1) {
+                    current = this.tail
+                    this.tail.prev.next = null
+                    this.tail = this.tail.prev
+                } else {
+                    let index = 0;
+                    while(index++ < position){
+                        current = current.next
+                    }
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+                }
+
+                this.length -= 1
+                return current.data
+            }
+
+            // 8.remove
+            DoublyLinkedList.prototype.remove = function(data) {
+                let index = 0
+                let current = this.head
+
+                if(this.length === 0) {
+                    return false
+                } else {
+                    while(index++ < this.length) {
+                        if(index === 0) {
+                            
+                        }
+                        if(current.data == data) {
+                            current.prev.next = current.next
+                            current.next.prev = current.prev
+                            return true
+                        }
+                        current = current.next
+                    }
+                }
             }
         }
 
@@ -118,17 +232,38 @@
         linkedList.append(10)
         linkedList.append(20)
         linkedList.append(33)
-        console.log(linkedList)
+        // console.log(linkedList)
 
-        alert(linkedList.toString())
-        alert(linkedList.backwordString())
-        alert(linkedList.forwardString())
+        // alert(linkedList.toString())
+        // alert(linkedList.backwordString())
+        // alert(linkedList.forwardString())
 
         // 测试insert
         linkedList.insert(0, 'aaaa')
         linkedList.insert(4, 'bbbb')
         linkedList.insert(2, 'cccc')
 
+        alert(linkedList.toString())
+
+        // 测试get
+        // alert(linkedList.get(0))
+        // alert(linkedList.get(2))
+        // alert(linkedList.get(3))
+
+        // 测试indexOf
+        // alert(linkedList.indexOf('bbbb'))
+        // alert(linkedList.indexOf('cccc'))
+        // alert(linkedList.indexOf('ddd'))
+
+        // 测试update
+        // alert(linkedList.update(0, 'aaa'))
+        // alert(linkedList.update(4, 'bbb'))
+        // alert(linkedList.update(10, 'aaa'))
+        // alert(linkedList.toString())
+
+        // 测试removeAt
+        alert(linkedList.removeAt(0))
+        alert(linkedList.removeAt(4))
         alert(linkedList.toString())
     </script>
 </body>
