@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>封装集合</title>
+</head>
+<body>
+    <script>
+    // 封装集合
+    function Set() {
+        // 对象属性
+        this.items = {}
+
+        // add方法
+        Set.prototype.add = function(value) {
+            //判断是否已经存在
+            if(this.has(value)) return false
+
+            this.items[value] = value
+            return true
+        }
+        // has方法
+        Set.prototype.has = function(value) {
+            return this.items.hasOwnProperty(value)
+        }
+        // remove方法
+        Set.prototype.remove = function(value) {
+            delete this.items[value]
+        }
+        // clear移除所有
+        Set.prototype.clear = function() {
+            this.items = {}
+        }
+        // size方法
+        Set.prototype.size = function() {
+            return Object.keys(this.items).length
+        }
+        // values
+        Set.prototype.values = function() {
+            return Object.values(this.items)
+        }
+    }
+
+    // 测试集合方法
+    let set = new Set()
+    set.add('abc')
+    set.add('bbb')
+    set.add('ccc')
+    set.add('ddd')
+
+    console.log(set)
+    console.log(set.has('bbb'))
+    console.log(set.has('ccc'))
+    console.log(set.has('ccb'))
+
+    set.remove('ccc');
+    set.clear()
+    console.log(set.values());
+    console.log(set.size());
+    </script>
+</body>
+</html>

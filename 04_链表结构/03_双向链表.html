@@ -207,24 +207,8 @@
 
             // 8.remove
             DoublyLinkedList.prototype.remove = function(data) {
-                let index = 0
-                let current = this.head
-
-                if(this.length === 0) {
-                    return false
-                } else {
-                    while(index++ < this.length) {
-                        if(index === 0) {
-                            
-                        }
-                        if(current.data == data) {
-                            current.prev.next = current.next
-                            current.next.prev = current.prev
-                            return true
-                        }
-                        current = current.next
-                    }
-                }
+                let index = this.indexOf(data)
+                return this.removeAt(index)
             }
         }
 
@@ -262,8 +246,13 @@
         // alert(linkedList.toString())
 
         // 测试removeAt
-        alert(linkedList.removeAt(0))
-        alert(linkedList.removeAt(4))
+        // alert(linkedList.removeAt(0))
+        // alert(linkedList.removeAt(4))
+        // alert(linkedList.toString())
+
+        // 测试remove
+        linkedList.remove('aaaa')
+        linkedList.remove('cccc')
         alert(linkedList.toString())
     </script>
 </body>
