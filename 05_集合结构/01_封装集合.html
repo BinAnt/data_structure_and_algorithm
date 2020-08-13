@@ -40,24 +40,96 @@
         Set.prototype.values = function() {
             return Object.values(this.items)
         }
+
+        // 并集操作
+        Set.prototype.unionSet = function(otherSet) {
+            // 1.初始化union
+            var unionSet = new Set()
+
+            // 2.将A集合中的所有元素放入union中
+            let valuesA = this.values()
+            valuesA.map(item => unionSet.add(item))
+            // 3.将B集合中的所有元素放入union中
+            let valuesB = otherSet.values()
+            valuesB.map(item => unionSet.add(item))
+
+            return unionSet
+        }
+
+        // 交集操作
+        Set.prototype.intersection = function(otherSet){
+            // 1. 新创建集合
+            let intersection = new Set()
+
+            // 2.遍历A集合看是否B也有
+            let values = this.values()
+            for(let i = 0; i < values.length; i++) {
+                if(otherSet.has(values[i])) {
+                    intersection.add(values[i])
+                }
+            }
+
+            return intersection
+        }
+
+        // 求差集操作
+        Set.prototype.diff = function(otherSet) {
+            let diffSet = new Set()
+            let values = this.values()
+            for (let index = 0; index < values.length; index++) {
+                const element = values[index];
+                if(!otherSet.has(element)) {
+                    diffSet.add(element)
+                }
+            }
+            return diffSet
+        }
+
+        // 求子集操作
+        Set.prototype.subset = function(otherSet) {
+            let values = this.values()
+            for (let i = 0; i < values.length; i++) {
+                const element = values[i];
+                if(!otherSet.has(element)) {
+                    return false
+                }
+            }
+
+            return true
+        }
     }
 
     // 测试集合方法
-    let set = new Set()
-    set.add('abc')
-    set.add('bbb')
-    set.add('ccc')
-    set.add('ddd')
+    // let set = new Set()
+    // set.add('abc')
+    // set.add('bbb')
+    // set.add('ccc')
+    // set.add('ddd')
 
-    console.log(set)
-    console.log(set.has('bbb'))
-    console.log(set.has('ccc'))
-    console.log(set.has('ccb'))
+    // console.log(set)
+    // console.log(set.has('bbb'))
+    // console.log(set.has('ccc'))
+    // console.log(set.has('ccb'))
 
-    set.remove('ccc');
-    set.clear()
-    console.log(set.values());
-    console.log(set.size());
+    // set.remove('ccc');
+    // set.clear()
+    // console.log(set.values());
+    // console.log(set.size());
+
+    let setA = new Set()
+    setA.add('abc')
+    setA.add('abb')
+    setA.add('acc')
+
+    let setB = new Set()
+    setB.add('aab')
+    setB.add('abc')
+    setB.add('ccc')
+
+    console.log(setA.unionSet(setB))
+    console.log(setA.intersection(setB))
+    console.log('diff', setA.diff(setB))
+    console.log('subset', setA.subset(setB));
     </script>
 </body>
 </html>
