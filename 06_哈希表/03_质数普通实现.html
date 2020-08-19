@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质数</title>
+</head>
+<body>
+    <script>
+        function isPrime(num) {
+            for (let i = 2; i < num; i++) {
+                if(num % i == 0) {
+                    return false
+                }
+            }
+
+            return true
+        }
+        alert(isPrime(3))
+        alert(isPrime(31))
+        alert(isPrime(23))
+        alert(isPrime(345))
+
+    </script>
+</body>
+</html>
