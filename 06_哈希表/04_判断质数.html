@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>判断质数</title>
+</head>
+<body>
+    <script>
+        // 实际上 
+        function isPrime(num) {
+            if(num < 2) {
+                return false;
+            }
+            let squareRoot = parseInt(Math.sqrt(num));
+            for (let i = 2; i < squareRoot; i++) {
+                if(num % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 测试
+        alert(isPrime(234))
+        alert(isPrime(13))
+        alert(isPrime(31))
+        alert(isPrime(44))
+    </script>
+</body>
+</html>
