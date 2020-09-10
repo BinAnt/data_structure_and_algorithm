@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //封装二叉搜索树
+        function BinarySearchTree() {
+            // 创建节点方法
+            function Node(key) {
+                this.key = key
+                this.left = null
+                this.right = null
+            }
+            // 有一个root元素
+            this.root = null
+            // 有操作方法
+
+            // 1.insert方法
+            BinarySearchTree.prototype.insert = function(key) {
+                // 1.1 创建新节点
+                let newNode = new Node(key)
+                console.log(newNode);
+                // 1.2 如果还没有根节点
+                if(this.root == null) {
+                    this.root = newNode
+                } else {
+                    this.insertNode(this.root, newNode)
+                }
+            }
+            // 1.3 插入新节点:对外暴露的方法
+            // 循环比较原有节点跟新节点的大小，知道找到新节点该插入的位置
+            BinarySearchTree.prototype.insertNode = function(root, newNode) {
+                if(newNode.key < root.key) {
+                    if(root.left == null) {
+                        root.left = newNode
+                    }else {
+                        this.insertNode(root.left, newNode)
+                    }
+                } else {
+                    if(root.right == null) {
+                        root.right = newNode
+                    } else {
+                        this.insertNode(root.right, newNode)
+                    }
+                }
+            }
+        }
+
+        let bst = new BinarySearchTree()
+        bst.insert(10)
+        bst.insert(5)
+        bst.insert(12)
+        bst.insert(6)
+        bst.insert(8)
+
+        console.log(bst)
+    </script>
+</body>
+</html>
